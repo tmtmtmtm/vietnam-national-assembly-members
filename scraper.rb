@@ -32,7 +32,7 @@ def scrape_list(url)
 
   noko.xpath('//div[@class="ds-list"]//table//tr[td]').each do |tr|
     tds = tr.css('td')
-    person_link = tds[1].css('a/@href').text
+    person_link = URI.encode tds[1].css('a/@href').text
     data = { 
       id: File.basename(person_link,'.*'),
       name: tds[1].text.tidy,

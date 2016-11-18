@@ -1,0 +1,41 @@
+---
+request:
+  method: get
+  uri: http://dbqh.na.gov.vn/daibieu/7/2999/Nguyen-Van-Chien.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - '*/*'
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - My web server
+    Date:
+    - Fri, 18 Nov 2016 12:15:00 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Content-Length:
+    - '162291'
+    Connection:
+    - keep-alive
+    X-Powered-By:
+    - ASP.NET
+    X-Aspnet-Version:
+    - 2.0.50727
+    Cache-Control:
+    - private
+    Set-Cookie:
+    - ASP.NET_SessionId=fpfzin55vqhqfz55qfo54c55; path=/; HttpOnly
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 18 Nov 2016 12:14:05 GMT

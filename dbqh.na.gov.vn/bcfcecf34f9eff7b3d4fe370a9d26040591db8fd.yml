@@ -1,0 +1,41 @@
+---
+request:
+  method: get
+  uri: http://dbqh.na.gov.vn/daibieu/10/2814/%C4%90ieu-Huynh-Sang.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - '*/*'
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - My web server
+    Date:
+    - Fri, 18 Nov 2016 15:34:48 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Content-Length:
+    - '162199'
+    Connection:
+    - keep-alive
+    X-Powered-By:
+    - ASP.NET
+    X-Aspnet-Version:
+    - 2.0.50727
+    Cache-Control:
+    - private
+    Set-Cookie:
+    - ASP.NET_SessionId=jlsjyurk4cramfit0e2f0j55; path=/; HttpOnly
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 18 Nov 2016 15:33:53 GMT

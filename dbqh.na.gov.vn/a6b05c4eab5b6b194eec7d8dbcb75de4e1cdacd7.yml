@@ -1,0 +1,41 @@
+---
+request:
+  method: get
+  uri: http://dbqh.na.gov.vn/daibieu/22/2393/Nong-Thi-Bich-Lien.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - '*/*'
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - My web server
+    Date:
+    - Fri, 18 Nov 2016 13:19:07 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Content-Length:
+    - '162070'
+    Connection:
+    - keep-alive
+    X-Powered-By:
+    - ASP.NET
+    X-Aspnet-Version:
+    - 2.0.50727
+    Cache-Control:
+    - private
+    Set-Cookie:
+    - ASP.NET_SessionId=w0tmcl30jgnw2lq5ctoxel55; path=/; HttpOnly
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 18 Nov 2016 13:18:12 GMT

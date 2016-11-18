@@ -1,0 +1,41 @@
+---
+request:
+  method: get
+  uri: http://dbqh.na.gov.vn/daibieu/5/1948/Nguyen-%C4%90ang-Tien.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - '*/*'
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - My web server
+    Date:
+    - Fri, 18 Nov 2016 16:42:37 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Content-Length:
+    - '162375'
+    Connection:
+    - keep-alive
+    X-Powered-By:
+    - ASP.NET
+    X-Aspnet-Version:
+    - 2.0.50727
+    Cache-Control:
+    - private
+    Set-Cookie:
+    - ASP.NET_SessionId=2pz0xz45uhzdok552kxd3n45; path=/; HttpOnly
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 18 Nov 2016 16:41:43 GMT

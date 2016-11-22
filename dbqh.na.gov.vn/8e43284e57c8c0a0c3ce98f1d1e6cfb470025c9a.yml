@@ -20,11 +20,11 @@ response:
     Server:
     - My web server
     Date:
-    - Fri, 18 Nov 2016 16:28:13 GMT
+    - Tue, 22 Nov 2016 16:22:02 GMT
     Content-Type:
     - text/html; charset=utf-8
     Content-Length:
-    - '162443'
+    - '162442'
     Connection:
     - keep-alive
     X-Powered-By:
@@ -34,8 +34,8 @@ response:
     Cache-Control:
     - private
     Set-Cookie:
-    - ASP.NET_SessionId=x0htsuvgt2syc055hpuh4c45; path=/; HttpOnly
+    - ASP.NET_SessionId=k5dllr451tyagr45riwgx255; path=/; HttpOnly
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Fri, 18 Nov 2016 16:27:18 GMT
+recorded_at: Tue, 22 Nov 2016 16:21:07 GMT

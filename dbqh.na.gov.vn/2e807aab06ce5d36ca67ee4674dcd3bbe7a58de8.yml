@@ -1,0 +1,41 @@
+---
+request:
+  method: get
+  uri: http://dbqh.na.gov.vn/daibieu/13/2017/Tran-Van.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - '*/*'
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Server:
+    - My web server
+    Date:
+    - Tue, 22 Nov 2016 17:03:29 GMT
+    Content-Type:
+    - text/html; charset=utf-8
+    Content-Length:
+    - '162701'
+    Connection:
+    - keep-alive
+    X-Powered-By:
+    - ASP.NET
+    X-Aspnet-Version:
+    - 2.0.50727
+    Cache-Control:
+    - private
+    Set-Cookie:
+    - ASP.NET_SessionId=rgaf1ljj0dofu245yilvw155; path=/; HttpOnly
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Tue, 22 Nov 2016 17:02:34 GMT

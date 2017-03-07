@@ -10,7 +10,8 @@ require 'pry'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
-# TODO: Remove this line when refactoring
+# TODO: Remove this line when refactoring. The metrics have been disabled
+# as a temporary fix to allow the existing code to pass.
 # rubocop:disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
 
 class String

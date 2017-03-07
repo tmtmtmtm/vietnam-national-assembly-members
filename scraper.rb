@@ -10,6 +10,9 @@ require 'pry'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
+# TODO: Remove this line when refactoring
+# rubocop:disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
+
 class String
   def tidy
     gsub(/[[:space:]]+/, ' ').strip

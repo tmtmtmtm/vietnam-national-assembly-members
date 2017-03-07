@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'scraperwiki'
 require 'nokogiri'
@@ -11,7 +12,7 @@ require 'scraped_page_archive/open-uri'
 
 class String
   def tidy
-    self.gsub(/[[:space:]]+/, ' ').strip
+    gsub(/[[:space:]]+/, ' ').strip
   end
 end
 
@@ -45,27 +46,26 @@ def scrape_list(url)
   noko.xpath('//div[@class="ds-list"]//table//tr[td]').each do |tr|
     tds = tr.css('td')
     person_link = URI.encode tds[1].css('a/@href').text
-    data = { 
-      id: File.basename(person_link,'.*'),
-      name: tds[1].text.tidy,
-      birth_date: '%d-%02d-%02d' % tds[2].text.tidy.split("/").reverse,
-      gender: gender_from(tds[3].text.tidy),
-      area: tds[4].text.tidy,
-      source: person_link,
-      term: '13',
+    data = {
+      id:         File.basename(person_link, '.*'),
+      name:       tds[1].text.tidy,
+      birth_date: '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse,
+      gender:     gender_from(tds[3].text.tidy),
+      area:       tds[4].text.tidy,
+      source:     person_link,
+      term:       '13',
     }.merge(scrape_person(person_link))
-    ScraperWiki.save_sqlite([:id, :term], data)
+    ScraperWiki.save_sqlite(%i(id term), data)
   end
 
-  unless (next_page = noko.css('ul.paging a.next/@href').text).empty?
-    scrape_list(next_page)
-  end
+  next_page = noko.css('ul.paging a.next/@href').text
+  scrape_list(next_page) unless next_page.empty?
 end
 
 def scrape_person(url)
   noko = noko_for(url)
-  data = { 
-    image: noko.css('img.img-detail/@src').text
+  {
+    image: noko.css('img.img-detail/@src').text,
   }
 end
 

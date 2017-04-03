@@ -64,5 +64,6 @@ def scrape_person(url)
   }
 end
 
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 scrape_list('http://dbqh.na.gov.vn/dbqh_p_0/ABC/all/type/0/Default.aspx')
 archive_committees('http://dbqh.na.gov.vn/dbqh_p_0/ABC/all/type/0/Default.aspx')

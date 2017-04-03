@@ -41,7 +41,8 @@ def scrape_list(url)
     tds = tr.css('td')
     person_link = URI.encode tds[1].css('a/@href').text
     data = {
-      id:         File.basename(person_link, '.*'),
+      old_id:     File.basename(person_link, '.*'),
+      id:         person_link.split('/').last(2).first,
       name:       tds[1].text.tidy,
       birth_date: '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse,
       gender:     gender_from(tds[3].text.tidy),

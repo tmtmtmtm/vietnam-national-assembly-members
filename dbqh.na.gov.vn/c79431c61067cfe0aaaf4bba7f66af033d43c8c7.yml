@@ -20,7 +20,7 @@ response:
     Server:
     - My web server
     Date:
-    - Tue, 04 Apr 2017 03:08:34 GMT
+    - Thu, 06 Apr 2017 03:27:00 GMT
     Content-Type:
     - text/html; charset=utf-8
     Content-Length:
@@ -34,8 +34,8 @@ response:
     Cache-Control:
     - private
     Set-Cookie:
-    - ASP.NET_SessionId=wmqra1bkf2k4odjdi1il3b45; path=/; HttpOnly
+    - ASP.NET_SessionId=5th51y55qwswaw2ydg3pe245; path=/; HttpOnly
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Tue, 04 Apr 2017 15:07:55 GMT
+recorded_at: Thu, 06 Apr 2017 15:25:46 GMT

@@ -10,6 +10,21 @@ require 'scraperwiki'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
+class MemberPage < Scraped::HTML
+  field :image do
+    noko.css('img.img-detail/@src').text
+  end
+
+  field :source do
+    url
+  end
+end
+
+def scraper(h)
+  url, klass = h.to_a.first
+  klass.new(response: Scraped::Request.new(url: url).response)
+end
+
 def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
@@ -46,9 +61,8 @@ def scrape_list(url)
       birth_date: '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse,
       gender:     gender_from(tds[3].text.tidy),
       area:       tds[4].text.tidy,
-      source:     person_link,
       term:       '13',
-    }.merge(scrape_person(person_link))
+    }.merge(scraper(person_link => MemberPage).to_h)
     puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
     ScraperWiki.save_sqlite(%i[id term], data)
   end
@@ -56,13 +70,6 @@ def scrape_list(url)
   unless (next_page = noko.css('ul.paging a.next/@href').text).empty?
     scrape_list(next_page)
   end
-end
-
-def scrape_person(url)
-  noko = noko_for(url)
-  {
-    image: noko.css('img.img-detail/@src').text,
-  }
 end
 
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil

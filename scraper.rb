@@ -100,17 +100,20 @@ def archive_committees(url)
   end
 end
 
-def scrape_list(url)
+def list_page_members(url)
   page = scraper(url => MembersPage)
   data = page.members.map do |person|
     person.merge(scraper(person[:source] => MemberPage).to_h)
   end
-  data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
-  ScraperWiki.save_sqlite(%i[id term], data)
-
-  scrape_list(page.next_page) unless page.next_page.empty?
+  return data if page.next_page.empty?
+  (data + list_page_members(page.next_page)).flatten
 end
 
+url = 'http://dbqh.na.gov.vn/dbqh_p_0/ABC/all/type/0/Default.aspx'
+data = list_page_members(url)
+data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
+
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
-scrape_list('http://dbqh.na.gov.vn/dbqh_p_0/ABC/all/type/0/Default.aspx')
+ScraperWiki.save_sqlite(%i[id term], data)
+
 archive_committees('http://dbqh.na.gov.vn/dbqh_p_0/ABC/all/type/0/Default.aspx')

@@ -6,78 +6,11 @@ require 'pry'
 require 'scraped'
 require 'scraperwiki'
 
+require_rel 'lib'
+
 # require 'open-uri/cached'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
-
-class MembersPage < Scraped::HTML
-  field :members do
-    noko.xpath('//div[@class="ds-list"]//table//tr[td]').map do |tr|
-      fragment(tr => MemberRow).to_h
-    end
-  end
-
-  field :next_page do
-    noko.css('ul.paging a.next/@href').text
-  end
-end
-
-class MemberRow < Scraped::HTML
-  field :old_id do
-    File.basename(source, '.*')
-  end
-
-  field :id do
-    source.split('/').last(2).first
-  end
-
-  field :name do
-    tds[1].text.tidy
-  end
-
-  field :birth_date do
-    '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse
-  end
-
-  field :gender do
-    gender_from(tds[3].text.tidy)
-  end
-
-  field :area do
-    tds[4].text.tidy
-  end
-
-  field :term do
-    '13'
-  end
-
-  field :source do
-    URI.encode tds[1].css('a/@href').text
-  end
-
-  private
-
-  def tds
-    noko.css('td')
-  end
-
-  def gender_from(text)
-    return if text.to_s.empty?
-    return 'female' if text == 'Nữ'
-    return 'male' if text == 'Nam'
-    abort "Unknown gender: #{text}"
-  end
-end
-
-class MemberPage < Scraped::HTML
-  field :image do
-    noko.css('img.img-detail/@src').text
-  end
-
-  field :source do
-    url
-  end
-end
 
 def scraper(h)
   url, klass = h.to_a.first
@@ -90,6 +23,7 @@ end
 
 # We will want to actually scrape the data from these at some point, but
 # for now we only archive it, in case it disappears
+# TODO: port to Scraped
 def archive_committees(url)
   noko = noko_for(url)
   urls = noko.css('a[href^="http://dbqh.na.gov.vn/cac-co-quan-quoc-hoi/"]/@href').map(&:text)

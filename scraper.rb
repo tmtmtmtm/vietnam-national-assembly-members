@@ -10,6 +10,65 @@ require 'scraperwiki'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
+class MembersPage < Scraped::HTML
+  field :members do
+    noko.xpath('//div[@class="ds-list"]//table//tr[td]').map do |tr|
+      fragment(tr => MemberRow).to_h
+    end
+  end
+
+  field :next_page do
+    noko.css('ul.paging a.next/@href').text
+  end
+end
+
+class MemberRow < Scraped::HTML
+  field :old_id do
+    File.basename(source, '.*')
+  end
+
+  field :id do
+    source.split('/').last(2).first
+  end
+
+  field :name do
+    tds[1].text.tidy
+  end
+
+  field :birth_date do
+    '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse
+  end
+
+  field :gender do
+    gender_from(tds[3].text.tidy)
+  end
+
+  field :area do
+    tds[4].text.tidy
+  end
+
+  field :term do
+    '13'
+  end
+
+  field :source do
+    URI.encode tds[1].css('a/@href').text
+  end
+
+  private
+
+  def tds
+    noko.css('td')
+  end
+
+  def gender_from(text)
+    return if text.to_s.empty?
+    return 'female' if text == 'Nữ'
+    return 'male' if text == 'Nam'
+    abort "Unknown gender: #{text}"
+  end
+end
+
 class MemberPage < Scraped::HTML
   field :image do
     noko.css('img.img-detail/@src').text
@@ -29,13 +88,6 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
-def gender_from(text)
-  return if text.to_s.empty?
-  return 'female' if text == 'Nữ'
-  return 'male' if text == 'Nam'
-  abort "Unknown gender: #{text}"
-end
-
 # We will want to actually scrape the data from these at some point, but
 # for now we only archive it, in case it disappears
 def archive_committees(url)
@@ -49,27 +101,14 @@ def archive_committees(url)
 end
 
 def scrape_list(url)
-  noko = noko_for(url)
-
-  noko.xpath('//div[@class="ds-list"]//table//tr[td]').each do |tr|
-    tds = tr.css('td')
-    person_link = URI.encode tds[1].css('a/@href').text
-    data = {
-      old_id:     File.basename(person_link, '.*'),
-      id:         person_link.split('/').last(2).first,
-      name:       tds[1].text.tidy,
-      birth_date: '%d-%02d-%02d' % tds[2].text.tidy.split('/').reverse,
-      gender:     gender_from(tds[3].text.tidy),
-      area:       tds[4].text.tidy,
-      term:       '13',
-    }.merge(scraper(person_link => MemberPage).to_h)
-    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
-    ScraperWiki.save_sqlite(%i[id term], data)
+  page = scraper(url => MembersPage)
+  data = page.members.map do |person|
+    person.merge(scraper(person[:source] => MemberPage).to_h)
   end
+  data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
+  ScraperWiki.save_sqlite(%i[id term], data)
 
-  unless (next_page = noko.css('ul.paging a.next/@href').text).empty?
-    scrape_list(next_page)
-  end
+  scrape_list(page.next_page) unless page.next_page.empty?
 end
 
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil

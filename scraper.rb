@@ -34,7 +34,6 @@ def archive_committees(url)
 end
 
 def scrape_list(url)
-  warn url
   noko = noko_for(url)
 
   noko.xpath('//div[@class="ds-list"]//table//tr[td]').each do |tr|
@@ -50,6 +49,7 @@ def scrape_list(url)
       source:     person_link,
       term:       '13',
     }.merge(scrape_person(person_link))
+    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
     ScraperWiki.save_sqlite(%i[id term], data)
   end
 

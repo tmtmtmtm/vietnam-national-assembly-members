@@ -50,7 +50,7 @@ def scrape_list(url)
       source:     person_link,
       term:       '13',
     }.merge(scrape_person(person_link))
-    ScraperWiki.save_sqlite(%i(id term), data)
+    ScraperWiki.save_sqlite(%i[id term], data)
   end
 
   unless (next_page = noko.css('ul.paging a.next/@href').text).empty?
